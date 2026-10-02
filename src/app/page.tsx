@@ -151,5 +151,8 @@ export default function Home() {
 
             <button type="submit">Subscribe</button>
           </form>
-        </section>
+        </section>   
       </main>
+    </>
+  );
+}
