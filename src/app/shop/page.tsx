@@ -1,0 +1,2 @@
+const products=["Aurelia Hoops","Luna Chain","Solace Ring","Celia Pendant","Noa Cuff","Eden Studs"];
+export default function Shop(){return <main className="page"><p className="eyebrow">SHOP</p><h1>The collection</h1><div className="grid">{products.map((x,i)=><article className="card" key={x}><div className="productImg"><span>FANVIRA</span></div><h3>{x}</h3><p>${68+i*7}</p></article>)}</div></main>}

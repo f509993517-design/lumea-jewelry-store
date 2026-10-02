@@ -1,0 +1,1 @@
+export default function Cart(){return <main className="page narrow"><p className="eyebrow">YOUR BAG</p><h1>Your cart is ready.</h1><p>Add pieces from the collection to begin your order.</p><a className="button" href="/shop">Continue shopping</a></main>}
