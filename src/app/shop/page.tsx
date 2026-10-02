@@ -36,7 +36,18 @@ export default function Shop() {
     <main className="page">
       <p className="eyebrow">SHOP</p>
 
-      <h1>The collection</h1>
+      <div className="shopHeader">
+        <div>
+          <h1>The collection</h1>
+          <p>
+            Refined pieces designed to become part of your everyday ritual.
+          </p>
+        </div>
+
+        <span className="productCount">
+          {products.length} pieces
+        </span>
+      </div>
 
       <div className="grid">
         {products.map((product) => (
@@ -48,9 +59,16 @@ export default function Shop() {
               />
             </div>
 
-            <h3>{product.name}</h3>
+            <div className="productInfo">
+              <div>
+                <h3>{product.name}</h3>
+                <p>${product.price}</p>
+              </div>
 
-            <p>${product.price}</p>
+              <button className="addButton">
+                Add to Cart
+              </button>
+            </div>
           </article>
         ))}
       </div>
