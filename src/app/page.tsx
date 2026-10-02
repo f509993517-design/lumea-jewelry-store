@@ -154,18 +154,4 @@ export default function Home() {
         </section>
       </main>
 
-      {/* FOOTER */}
-      <footer>
-        <p className="logo">FANVIRA</p>
-
-        <p>
-          Refined jewelry for modern rituals.
-        </p>
-
-        <p>
-          © 2026 FANVIRA. All rights reserved.
-        </p>
-      </footer>
-    </>
-  );
-}
+    
