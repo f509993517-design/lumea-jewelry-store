@@ -9,6 +9,10 @@ type Product = {
   slug: string;
 };
 
+type CartItem = Product & {
+  quantity: number;
+};
+
 export default function AddToCartButton({
   product,
 }: {
@@ -17,41 +21,56 @@ export default function AddToCartButton({
   const [added, setAdded] = useState(false);
 
   function handleAddToCart() {
-    const stored = localStorage.getItem("fanvira-cart");
+    try {
+      const stored = localStorage.getItem("fanvira-cart");
 
-    const cart: (Product & { quantity: number })[] = stored
-      ? JSON.parse(stored)
-      : [];
+      let cart: CartItem[] = [];
 
-    const existing = cart.find(
-      (item) => item.slug === product.slug
-    );
+      if (stored) {
+        try {
+          const parsed = JSON.parse(stored);
 
-    if (existing) {
-      existing.quantity += 1;
-    } else {
-      cart.push({
-        ...product,
-        quantity: 1,
-      });
+          if (Array.isArray(parsed)) {
+            cart = parsed;
+          }
+        } catch {
+          cart = [];
+        }
+      }
+
+      const existing = cart.find(
+        (item) => item.slug === product.slug
+      );
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({
+          ...product,
+          quantity: 1,
+        });
+      }
+
+      localStorage.setItem(
+        "fanvira-cart",
+        JSON.stringify(cart)
+      );
+
+      window.dispatchEvent(new Event("cart-updated"));
+
+      setAdded(true);
+
+      setTimeout(() => {
+        setAdded(false);
+      }, 1800);
+    } catch (error) {
+      console.error("Add to cart failed:", error);
     }
-
-    localStorage.setItem(
-      "fanvira-cart",
-      JSON.stringify(cart)
-    );
-
-    window.dispatchEvent(new Event("cart-updated"));
-
-    setAdded(true);
-
-    setTimeout(() => {
-      setAdded(false);
-    }, 1800);
   }
 
   return (
     <button
+      type="button"
       className="addButton productAddButton"
       onClick={handleAddToCart}
     >
