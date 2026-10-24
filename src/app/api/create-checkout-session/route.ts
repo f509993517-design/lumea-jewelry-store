@@ -1,10 +1,15 @@
 import Stripe from "stripe";
 import { NextResponse } from "next/server";
 
-const stripe = new Stripe(
-  process.env.STRIPE_SECRET_KEY!
-);
+function getStripe() {
+  const secretKey = process.env.STRIPE_SECRET_KEY;
 
+  if (!secretKey) {
+    throw new Error("STRIPE_SECRET_KEY is missing.");
+  }
+
+  return new Stripe(secretKey);
+}
 const products = {
   "aurelia-hoops": {
     name: "Aurelia Hoops",
@@ -79,8 +84,8 @@ export async function POST(request: Request) {
       request.headers.get("origin") ||
       "https://lumea-jewelry-store-production.up.railway.app";
 
-    const session =
-      await stripe.checkout.sessions.create({
+   const session =
+  await getStripe().checkout.sessions.create({
         mode: "payment",
         line_items: lineItems,
         success_url:
