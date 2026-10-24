@@ -9,26 +9,21 @@ export default function CheckoutSuccess() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setSessionId(params.get("session_id") || "");
-    // Clear the local bag only after Stripe redirects to this success URL.
-    // The server-side payment status should still be verified before fulfilling an order.
-    if (params.get("session_id")) {
-      localStorage.removeItem("fanvira-cart");
-      window.dispatchEvent(new Event("cart-updated"));
-    }
   }, []);
 
   return (
     <main className="page narrow">
-      <p className="eyebrow">FANVIRA ORDER</p>
-      <h1>Thank you for your order.</h1>
+      <p className="eyebrow">FANVIRA CHECKOUT</p>
+      <h1>Thank you for shopping with FANVIRA.</h1>
       <p>
-        Stripe has returned you to FANVIRA. Please keep your Stripe receipt
-        for your records. If you do not receive a confirmation email, contact
-        us before placing another order.
+        If you completed payment, check your email for the receipt from Stripe.
+        This return page alone does not verify payment or confirm that an order
+        has been fulfilled. Please contact the store if you are unsure about
+        your payment status.
       </p>
       {sessionId && (
         <p className="checkoutNote">
-          Reference: {sessionId.slice(0, 18)}…
+          Checkout reference: {sessionId.slice(0, 18)}…
         </p>
       )}
       <Link href="/shop" className="button">Continue Shopping</Link>
